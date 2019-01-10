@@ -1,0 +1,65 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group">
+    <label for="loTrinh">Lộ trình:</label>
+    <select id="loTrinh" name="loTrinh" autocomplete="off" class="form-control mw-100" required
+        group-input-data-parsley>
+        <% dsLoTrinh.forEach(lt => { %>
+        <option value="<%= lt.objectId %>">
+            <%= lt.huyenTinhDi %> -
+            <%= lt.huyenTinhDen %>
+        </option>
+        <% }); %>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="xeKhach">Xe khách:</label>
+    <select id="xeKhach" name="xeKhach" autocomplete="off" class="form-control mw-100" required
+        group-input-data-parsley>
+        <% dsXe.forEach(xe => { %>
+        <option value="<%= xe.objectId %>">
+            <%= xe.bienSo %> -
+            <%= xe.chiTiet %>
+        </option>
+        <% }); %>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="giaVe">Giá vé (VND):</label>
+    <input type="number" class="form-control" id="giaVe" placeholder="Nhập giá tiền cho tuyến đi" required>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="thoiGian">Thời gian tuyến xe:</label>
+    <p>Mỗi tuyến xe với từng lộ trình và xe khác nhau, có thể tạo nhiều thời gian di chuyển khác nhau trong cùng ngày.</p>
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #1:</label>
+    <input type="time" class="form-control" id="thoiGian-1" required>
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #2:</label>
+    <input type="time" class="form-control" id="thoiGian-2">
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #3:</label>
+    <input type="time" class="form-control" id="thoiGian-3">
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #4:</label>
+    <input type="time" class="form-control" id="thoiGian-4" >
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #5:</label>
+    <input type="time" class="form-control" id="thoiGian-5" >
+</div>

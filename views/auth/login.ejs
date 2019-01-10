@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="/stylesheets/login.css" />
+
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="row login-frame">
+      <div class="row login-ec1810">
+        EC1810 Business
+      </div>
+
+      <div class="row login-input">
+        <form method="POST" action="/auth/login">
+          <div class="input-group login-input-text">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="username" type="text" class="form-control" name="username" placeholder="ID của bạn" required
+              autocomplete="false" />
+          </div>
+          <div class="input-group login-input-text">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="password" type="password" class="form-control" name="password" placeholder="Mật khẩu của bạn"
+              required autocomplete="false" />
+          </div>
+          <% if (message) { %>
+          <div class="input-group login-input-text">
+            <%= message %>
+          </div>
+          <% } else {} %>
+
+          <div class="input-group login-input-text">
+            <button type="submit" class="btn btn-primary btn-login">Đăng nhập</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.login-frame {
+    max-width: 600px;
+    align-items: center;
+
+    border-radius: 10px;
+    box-shadow: 0 3px 16px #ddd;
+
+    padding: 16px;
+    background-color: white;
+    margin: auto;
+}
+
+.login-container {
+    background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); 
+    background-repeat:no-repeat;
+    background-position:center; 
+    background-size: cover;
+    height: 100%;
+    margin: 0;
+    padding: 100px 0 0 0;
+}
+
+.login-ec1810 {
+    font-size: 32px;
+    font-weight: bolder;
+
+    color: dodgerblue;
+    padding: 16px;
+
+    text-align: center;
+}
+
+.login-input {
+    width: 80%;
+    height: auto;
+
+    margin: 16px auto;
+    align-items: center;
+}
+
+.login-input-text {
+    margin: 16px auto;
+    align-items: center;
+}
+
+.btn-login {
+    width: 250px;
+    height: 50px;
+
+    margin: auto;
+    margin: 32px auto 0 auto;
+}

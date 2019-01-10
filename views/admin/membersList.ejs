@@ -1,0 +1,262 @@
+<button class="btn btn-primary btn-create" onclick="">Thêm thành viên mới</button>
+<div class="table-responsive">
+    <table id="members" class="table table-striped table-bordered dt-responsive nowrap">
+        <thead>
+            <tr>
+                <th>Mã thành viên</th>
+                <th>Tài khoản</th>
+                <th>Email</th>
+                <th>Họ và tên</th>
+                <th>Giới tính</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+    var table = $("#members").DataTable({
+        processing: true,
+        serverSide: true,
+        bLengthChange: false,
+        paging: true,
+        pageLength: 10,
+        autoWidth: false,
+        language: {
+            info: "Đang hiển thị trang _PAGE_ / _PAGES_",
+            search: "Tìm kiếm",
+            paginate: {
+                previous: "Trước",
+                next: "Sau"
+            }
+        },
+        ajax: {
+            url: window.location.href,
+            type: "GET",
+            dataType: "json"
+        },
+        columns: [{
+                data: "objectId",
+                class: "text-left",
+                orderable: false,
+                visible: true,
+                render: function (data, type, row) {
+                    if (row.objectId !== undefined && row.objectId !== null)
+                        return row.objectId;
+                    else return "";
+                }
+            },
+            {
+                data: "username",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.username !== undefined && row.username !== null) return row.username;
+                    else return "";
+                }
+            },
+            {
+                data: "emailUser",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.emailUser !== undefined && row.emailUser !== null) return row.emailUser;
+                    else return "";
+                }
+            },
+            {
+                data: "hoTen",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.hoTen !== undefined && row.hoTen !== null) return row.hoTen;
+                    else return "";
+                }
+            },
+            {
+                data: "gioiTinh",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.gioiTinh !== undefined && row.gioiTinh !== null) return row.gioiTinh;
+                    else return "";
+                }
+            },
+            {
+                data: "soDienThoai",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.soDienThoai !== undefined && row.soDienThoai !== null) return row.soDienThoai;
+                    else return "";
+                }
+            },
+            {
+                data: "diaChi",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.diaChi !== undefined && row.diaChi !== null) return row.diaChi;
+                    else return "";
+                }
+            },
+            {
+                class: "text-center",
+                orderable: false,
+                render: function (data, type, row) {
+                    return (
+                        '<button class="btn btn-default btn-edit" data-id="' +
+                        row.objectId + '">' +
+                        'Sửa</button>'
+                    );
+                }
+            }
+        ]
+    });
+
+
+    ////// ------------------Button Edit
+    $(document).on("click", "button.btn-edit", function (event) {
+        $("#notificationAlert").hide();
+        const data = {
+            id: $(this).attr("data-id")
+        };
+        let error = false;
+        var dialog = bootbox.dialog({
+            title: "Thông tin thành viên",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                resetPssword: {
+                    label: "Đặt lại mật khẩu",
+                    className: "btn-warning",
+                    callback: function () {
+                        let error = false;
+                        const result = {
+                            objectId: $("#objectId").val()
+                        };
+                        
+                        $.ajax({
+                                type: "POST",
+                                url: "/admin/users/members/reset-password",
+                                data: result,
+                                async: true
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        let error = false;
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            hoTen: $("#hoTen").val(),
+                            gioiTinh: $("#gioiTinh").val(),
+                            diaChi: $("#diaChi").val(),
+                            soDienThoai: $("#soDienThoai").val()
+                        };
+                        
+                        $.ajax({
+                                type: "POST",
+                                url: "/admin/users/members/update-member",
+                                data: result,
+                                async: true
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/admin/users/members/modify-member",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+    ////// ------------------Button Create
+    $(document).on("click", "button.btn-create", function (event) {
+        let dialog = bootbox.dialog({
+            title: "Thêm thành viên mới",
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Tạo mới",
+                    className: "btn-success",
+                    callback: function () {
+                        const result = {
+                            username: $("#username").val(),
+                            hoTen: $("#hoTen").val(),
+                            gioiTinh: $("#gioiTinh").val(),
+                            diaChi: $("#diaChi").val(),
+                            soDienThoai: $("#soDienThoai").val(),
+                            emailUser: $("#emailUser").val()
+                        };
+                        $.ajax({
+                                type: "POST",
+                                url: "/admin/users/members/create-member",
+                                data: result
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/admin/users/members/new-member"
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+</script>

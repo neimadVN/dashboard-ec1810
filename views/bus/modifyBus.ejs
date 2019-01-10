@@ -1,0 +1,76 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group">
+    <label for="idLoTrinh">Mã lộ trình:</label>
+    <input type="text" class="form-control" id="objectId" value="<%= bus.objectId %>" readonly>
+</div>
+
+<div class="form-group">
+    <label for="loTrinh">Lộ trình:</label>
+    <input type="text" class="form-control" id="loTrinh" value="<%= bus.loTrinh.huyenTinhDi %> - <%= bus.loTrinh.huyenTinhDen %>" readonly>
+</div>
+
+<div class="form-group">
+    <label for="xeKhach">Xe khách:</label>
+    <input type="text" class="form-control" id="xeKhach" value="<%= bus.xe.bienSo %> - <%= bus.xe.chiTiet %>" readonly>
+</div>
+
+<div class="form-group">
+    <label for="giaVe">Giá vé (VND):</label>
+    <input type="number" class="form-control" id="giaVe" placeholder="Nhập giá tiền cho tuyến đi" value="<%= bus.giaVe %>" required>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="thoiGian">Thời gian tuyến xe:</label>
+    <p>Mỗi tuyến xe với từng lộ trình và xe khác nhau, có thể tạo nhiều thời gian di chuyển khác nhau trong cùng ngày.</p>
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #1:</label>
+    <input type="time" class="form-control" id="thoiGian-1" required value="<%= bus.thoiGian[0] %>">
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #2:</label>
+    <input type="time" class="form-control" id="thoiGian-2" value="<%= bus.thoiGian[1] %>">
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #3:</label>
+    <input type="time" class="form-control" id="thoiGian-3" value="<%= bus.thoiGian[2] %>">
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #4:</label>
+    <input type="time" class="form-control" id="thoiGian-4" value="<%= bus.thoiGian[3] %>">
+</div>
+
+<div class="form-group">
+    <label for="thoiGian">Khung giờ #5:</label>
+    <input type="time" class="form-control" id="thoiGian-5" value="<%= bus.thoiGian[4] %>">
+</div>
+
+<div class="form-group">
+    <label for="trangThai">Trạng thái:</label>
+    <select id="trangThai" name="trangThai" autocomplete="off" class="form-control mw-100" required
+        group-input-data-parsley>
+        <% if (bus.trangThai === 'ACTIVED') { %>
+        <option selected value="ACTIVED" class="text-active">
+            Còn hoạt động
+        </option>
+        <option value="INACTIVED" class="text-inactive">
+            Ngưng hoạt động
+        </option>
+        <% } else { %>
+        <option value="ACTIVED" class="text-active">
+            Còn hoạt động
+        </option>
+        <option selected value="INACTIVED" class="text-inactive">
+            Ngưng hoạt động
+        </option>
+        <% }; %>
+    </select>
+</div>

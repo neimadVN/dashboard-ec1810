@@ -1,0 +1,54 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group" style="display: none;">
+    <input type="text" class="form-control" id="objectId" disabled="true" value="<%= chinhSach.objectId %>" />
+</div>
+
+<div class="form-group">
+    <label for="po1">Chính sách #1:</label>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="chinhSach1">Tỉ lệ hoàn tiền (%):</label>
+    <input type="number" class="form-control" id="chinhSach1" value="<%= chinhSach.chinhSach1 %>" placeholder="Nhập tỉ lệ hoàn tiền (%)"
+        max="100" min="0" value="<%= chinhSach.chinhSach1 %>" required />
+</div>
+
+<div class="form-group">
+    <label for="thoiGian1">Điều kiện thời gian (giờ):</label>
+    <input type="number" class="form-control" id="thoiGian1" value="<%= chinhSach.thoiGian1 %>" placeholder="Nhập điều kiện thời gian để dùng chính sách"
+        min="0" max="50" value="<%= chinhSach.thoiGian1 %>" required />
+</div>
+
+<div class="form-group">
+    <label for="moTa1">Mô tả:</label>
+    <textarea type="text" class="form-control" id="moTa1" rows="5"><%= chinhSach.moTa1 %></textarea>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="po2">Chính sách #2:</label>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="chinhSach2">Tỉ lệ hoàn tiền (%):</label>
+    <input type="number" class="form-control" id="chinhSach2" value="<%= chinhSach.chinhSach2 %>" placeholder="Nhập tỉ lệ hoàn tiền (%)"
+        max="100" min="0" value="<%= chinhSach.chinhSach2 %>" required />
+</div>
+
+<div class="form-group">
+    <label for="thoiGian2">Điều kiện thời gian (giờ):</label>
+    <input type="number" class="form-control" id="thoiGian2" value="<%= chinhSach.thoiGian2 %>" placeholder="Nhập điều kiện thời gian để dùng chính sách"
+        min="0" max="50" value="<%= chinhSach.thoiGian2 %>" required />
+</div>
+
+<div class="form-group">
+    <label for="moTa2">Mô tả:</label>
+    <textarea type="text" class="form-control" id="moTa2" rows="5"><%= chinhSach.moTa2 %></textarea>
+</div>

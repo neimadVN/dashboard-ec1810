@@ -1,0 +1,58 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group">
+    <label for="id">Mã hãng xe:</label>
+    <input type="text" class="form-control" id="objectId" disabled="true" value="<%= user.objectId %>" />
+</div>
+
+<div class="form-group">
+    <label for="name">Hãng xe:</label>
+    <input type="text" class="form-control" id="tenHangXe" disabled="true" value="<%= user.hoTen %>" />
+</div>
+
+<div class="form-group">
+    <label for="place">Trụ sở:</label>
+    <input type="text" class="form-control" id="truSo" value="<%=user.diaChi %>" />
+</div>
+
+<div class="form-group">
+    <label for="hotline">Đường dây nóng:</label>
+    <input type="text" class="form-control" id="duongDayNong" value="<%= user.soDienThoai %>" />
+</div>
+
+<div class="form-group">
+    <label for="website">Website:</label>
+    <input type="text" class="form-control" id="website" value="<%= user.website %>" />
+</div>
+
+<div class="row vertical-line"></div>
+
+<div class="form-group">
+    <label for="maDoanhNghiep">Mã doanh nghiệp:</label>
+    <input type="text" class="form-control" id="maDoanhNghiep" value="<%= user.maDoanhNghiep %>" />
+</div>
+
+<div class="form-group">
+    <label for="noiCapMaDoanhNghiep">Nơi cấp:</label>
+    <input type="text" class="form-control" id="noiCapMaDoanhNghiep" value="<%= user.noiCapMaDoanhNghiep %>" />
+</div>
+
+<div class="form-group">
+    <label for="maSoThue">Mã số thuế:</label>
+    <input type="text" class="form-control" id="maSoThue" value="<%= user.maSoThue %>" />
+</div>
+
+<div class="row vertical-line"></div>
+
+<div class="form-group">
+    <label for="soTaiKhoan">Số tài khoản:</label>
+    <input type="text" class="form-control" id="soTaiKhoan" value="<%= user.soTaiKhoan %>" />
+</div>
+
+<div class="row user-row" style="display: none;">
+    <p>Vì lý do mang tính pháp lý và bảo mật, nên các thông tin về <b>"Mã doanh nghiệp"</b>, <b>"Nơi cấp"</b>, <b>"Mã
+            số thuế"</b> và <b>"Số tài khoản"</b> bạn sẽ không được phép thay đổi. Nếu muốn bạn hãy liên hệ trực tiếp
+        với chúng tôi.</p>
+    <p>Xin cảm ơn.</p>
+</div>

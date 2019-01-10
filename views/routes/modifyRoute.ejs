@@ -1,0 +1,122 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group">
+    <label for="objectId">Mã lộ trình:</label>
+    <input type="text" class="form-control" id="objectId" value="<%= route.objectId %>" readonly />
+</div>
+
+<div class="form-group">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="diemDi">Điểm đi:</label>
+            <input type="text" class="form-control" id="diemDi" value="<%= route.huyenTinhDi %>" disabled />
+        </div>
+        <div class="col-sm-6">
+            <label for="diemDen">Điểm đến:</label>
+            <input type="text" class="form-control" id="diemDen" value="<%= route.huyenTinhDen %>" disabled />
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="thoiGian">Thời gian di chuyển (phút):</label>
+    <input type="number" class="form-control" id="thoiGian" value="<%= route.thoiGianDuKien %>" required placeholder="Nhập thời gian dự kiến" />
+</div>
+
+<hr>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="diemDonKhach">Điểm đón khách:</label>
+            <input type="text" class="form-control" id="diemDon-1" placeholder="Điểm đón #1" value="<%= route.diemDon[0] %>" />
+        </div>
+        <div class="col-sm-6">
+            <label for="diemTraKhach">Điểm trả khách:</label>
+            <input type="text" class="form-control" id="diemTra-1" placeholder="Điểm trả #1" value="<%= route.diemTra[0] %>" />
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemDon-2" placeholder="Điểm đón #2" value="<%= route.diemDon[1] %>" />
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemTra-2" placeholder="Điểm trả #2" value="<%= route.diemTra[1] %>" />
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemDon-3" placeholder="Điểm đón #3" value="<%= route.diemDon[2] %>" />
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemTra-3" placeholder="Điểm trả #3" value="<%= route.diemTra[2] %>" />
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemDon-4" placeholder="Điểm đón #4" value="<%= route.diemDon[3] %>" />
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemTra-4" placeholder="Điểm trả #4" value="<%= route.diemTra[3] %>" />
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemDon-5" placeholder="Điểm đón #5" value="<%= route.diemDon[4] %>" />
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="diemTra-5" placeholder="Điểm trả #5" value="<%= route.diemTra[4] %>" />
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="trangThai">Trạng thái:</label>
+    <select id="trangThai" name="trangThai" autocomplete="off" class="form-control mw-100" required
+        group-input-data-parsley>
+        <% if (route.trangThai === 'ACTIVED') { %>
+        <option selected value="ACTIVED" class="text-active">
+            Còn hoạt động
+        </option>
+        <option value="INACTIVED" class="text-inactive">
+            Ngưng hoạt động
+        </option>
+        <% } else { %>
+        <option value="ACTIVED" class="text-active">
+            Còn hoạt động
+        </option>
+        <option selected value="INACTIVED" class="text-inactive">
+            Ngưng hoạt động
+        </option>
+        <% }; %>
+    </select>
+</div>
+
+<script>
+    function diaDiemFunction(method) {
+        const x = $("#" + method).val();
+        if (x === undefined || x === "") {
+            document.getElementById(method + "Moi").disabled = false;
+        } else {
+            document.getElementById(method + "Moi").disabled = true;
+        }
+    }
+</script>

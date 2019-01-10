@@ -1,0 +1,52 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group">
+    <label for="objectId">Mã tài khoản:</label>
+    <input type="text" class="form-control" id="objectId" required value="<%= member.objectId %>" readonly />
+</div>
+
+<div class="form-group">
+    <label for="username">Tài khoản:</label>
+    <input type="text" class="form-control" id="username" required value="<%= member.username %>" readonly />
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label for="hoTen">Họ và tên:</label>
+    <input type="text" class="form-control" id="hoTen" required placeholder="Nhập họ và tên khách hàng" value="<%= member.hoTen %>" />
+</div>
+
+<div class="form-group">
+    <label for="gioiTinh">Giới tính:</label>
+    <select id="gioiTinh" name="gioiTinh" autocomplete="off" class="form-control mw-100" required
+        group-input-data-parsley>
+
+        <% if (member.gioiTinh === 'Nam') { %>
+        <option selected value="Nam">Nam</option>
+        <option value="Nữ">Nữ</option>
+        <% } else { %>
+        <option value="Nam">Nam</option>
+        <option selected value="Nữ">Nữ</option>
+        <% }; %>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="soDienThoai">Số điện thoại:</label>
+    <input type="text" class="form-control" id="soDienThoai" required placeholder="Nhập số điện thoại của khách hàng"
+        value="<%= member.soDienThoai %>" />
+</div>
+
+<div class="form-group">
+    <label for="diaChi">Địa chỉ:</label>
+    <input type="text" class="form-control" id="diaChi" placeholder="Nhập địa chỉ của khách hàng" value="<% if (member.diaChi) { %> <%= member.diaChi %> <% } %>" />
+</div>
+
+<div class="container">
+    <div class="row">
+        <h3>Chú ý</h3>
+        <p>Khi đặt lại mật khẩu, mật khẩu mặc định là <b>123456</b></p>
+    </div>
+</div>

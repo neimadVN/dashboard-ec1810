@@ -1,0 +1,293 @@
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+@media (min-width: 768px) {
+  body {
+    margin-top: 50px;
+  }
+  /*html, body, #wrapper, #page-wrapper {height: 100%; overflow: hidden;}*/
+}
+
+#wrapper {
+  padding-left: 0;
+}
+
+#page-wrapper {
+  width: 100%;
+  padding: 0;
+  background-color: #fff;
+}
+
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 225px;
+  }
+
+  #page-wrapper {
+    padding: 22px 10px;
+  }
+}
+
+/* Top Navigation */
+
+.top-nav {
+  padding: 0 15px;
+}
+
+.top-nav > li {
+  display: inline-block;
+  float: left;
+}
+
+.top-nav > li > a {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  line-height: 20px;
+  color: #fff;
+}
+
+.top-nav > li > a:hover,
+.top-nav > li > a:focus,
+.top-nav > .open > a,
+.top-nav > .open > a:hover,
+.top-nav > .open > a:focus {
+  color: #fff;
+  background-color: #1a242f;
+}
+
+.top-nav > .open > .dropdown-menu {
+  width: 200px;
+  float: left;
+  position: absolute;
+  margin-top: 0;
+  /*border: 1px solid rgba(0,0,0,.15);*/
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-color: #fff;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.top-nav > .open > .dropdown-menu > li > a {
+  white-space: normal;
+}
+
+/* Side Navigation */
+
+@media (min-width: 768px) {
+  .side-nav {
+    position: fixed;
+    top: 60px;
+    left: 225px;
+    width: 225px;
+    margin-left: -225px;
+    border: none;
+    border-radius: 0;
+    border-top: 1px rgba(0, 0, 0, 0.5) solid;
+    overflow-y: auto;
+    background-color: #222;
+    /*background-color: #5A6B7D;*/
+    bottom: 0;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+  }
+
+  .side-nav > li > a {
+    width: 225px;
+    border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+  }
+
+  .side-nav li a:hover,
+  .side-nav li a:focus {
+    outline: none;
+    background-color: #1a242f !important;
+  }
+}
+
+.side-nav > li > ul {
+  padding: 0;
+  border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+}
+
+.side-nav > li > ul > li > a {
+  display: block;
+  padding: 10px 15px 10px 38px;
+  text-decoration: none;
+  /*color: #999;*/
+  color: #fff;
+}
+
+.side-nav > li > ul > li > a:hover {
+  color: #fff;
+}
+
+.navbar .nav > li > a > .label {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  position: absolute;
+  top: 14px;
+  right: 6px;
+  font-size: 10px;
+  font-weight: normal;
+  min-width: 15px;
+  min-height: 15px;
+  line-height: 1em;
+  text-align: center;
+  padding: 2px;
+}
+
+.navbar .nav > li > a:hover > .label {
+  top: 10px;
+}
+
+.navbar-brand {
+  padding: 5px 15px;
+}
+
+.trash {
+  color: rgb(209, 91, 71);
+}
+.flag {
+  color: rgb(248, 148, 6);
+}
+.panel-body {
+  padding: 0px;
+}
+.panel-footer .pagination {
+  margin: 0;
+}
+.panel .glyphicon,
+.list-group-item .glyphicon {
+  margin-right: 5px;
+}
+.panel-body .radio,
+.checkbox {
+  display: inline-block;
+  margin: 0px;
+}
+.panel-body input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: rgb(128, 144, 160);
+}
+.list-group-item:hover,
+a.list-group-item:focus {
+  text-decoration: none;
+  background-color: rgb(245, 245, 245);
+}
+.list-group {
+  margin-bottom: 0px;
+}
+.checkbox input[type="checkbox"] {
+  margin-left: 0;
+}
+
+.white-tooltip + .tooltip > .tooltip-inner {
+  background-color: #fff;
+}
+
+.btn3d {
+  position: relative;
+  top: -6px;
+  border: 0;
+  transition: all 40ms linear;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.btn3d:active:focus,
+.btn3d:focus:hover,
+.btn3d:focus {
+  -moz-outline-style: none;
+  outline: medium none;
+}
+.btn3d:active,
+.btn3d.active {
+  top: 2px;
+}
+.btn3d.btn-default {
+  color: #666666;
+  box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 2px rgba(255, 255, 255, 0.1) inset,
+    0 8px 0 0 #bebebe, 0 8px 8px 1px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+}
+.btn3d.btn-default:active,
+.btn3d.btn-default.active {
+  color: #666666;
+  box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 1px 3px 1px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.btn3d.btn-success {
+  box-shadow: 0 0 0 1px #31c300 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 8px 0 0 #5eb924, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  background-color: #78d739;
+}
+.btn3d.btn-success:active,
+.btn3d.btn-success.active {
+  box-shadow: 0 0 0 1px #30cd00 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  background-color: #78d739;
+}
+
+.btn3d.btn-warning {
+  box-shadow: 0 0 0 1px #d79a47 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 8px 0 0 #d79a34, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  background-color: #feaf20;
+}
+.btn3d.btn-warning:active,
+.btn3d.btn-warning.active {
+  box-shadow: 0 0 0 1px #d79a47 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  background-color: #feaf20;
+}
+
+.table-hor-scroll {
+  display: inline-block;
+  overflow-x: auto;
+} 
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}

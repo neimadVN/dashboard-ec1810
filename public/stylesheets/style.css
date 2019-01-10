@@ -1,0 +1,49 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.user-row {
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.user-row > .col-sm-9 {
+  font-weight: bold;
+}
+
+.user-container {
+  align-items: center;
+}
+
+.btn-edit, .btn-edit-password, .btn-edit-policy {
+  height: 50px;
+
+  margin: 16px;
+  padding: 6px 24px;
+  float: right;
+  align-items: center;
+}
+
+.vertical-line {
+  width: 100%;
+  height: 1px;
+
+  background-color: rgb(150, 150, 150);
+
+  margin: 16px 0;
+}
+
+.text-active {
+  font-weight: bold;
+  color: 		#5cb85c;
+}
+
+.text-inactive {
+  font-weight: bold;
+  color: 	#d9534f;
+}

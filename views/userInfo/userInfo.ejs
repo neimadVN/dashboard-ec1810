@@ -1,0 +1,356 @@
+<div class="user-container" id="userInformation">
+    <div class="row user-row">
+        <h3>Thông tin hãng xe</h3>
+    </div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Tên hãng xe:
+        </div>
+        <div class="col-sm-9">
+            <% if(locals.user) { %>
+            <%= locals.user.hoTen %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Trụ sở:
+        </div>
+        <div class="col-sm-9" id="user-truSo">
+            <% if(locals.user) { %>
+            <%= locals.user.diaChi %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Đường dây nóng:
+        </div>
+        <div class="col-sm-9" id="user-duongDayNong">
+            <% if(locals.user) { %>
+            <%= locals.user.soDienThoai %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Website:
+        </div>
+        <div class="col-sm-9" id="user-website">
+            <% if(locals.user) { %>
+            <%= locals.user.website %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row vertical-line"></div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Mã doanh nghiệp:
+        </div>
+        <div class="col-sm-9" id="user-maDoanhNghiep">
+            <% if(locals.user) { %>
+            <%= locals.user.maDoanhNghiep %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Nơi cấp:
+        </div>
+        <div class="col-sm-9" id="user-noiCap">
+            <% if(locals.user) { %>
+            <%= locals.user.noiCapMaDoanhNghiep %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Mã số thuế:
+        </div>
+        <div class="col-sm-9" id="user-maSoThue">
+            <% if(locals.user) { %>
+            <%= locals.user.maSoThue %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row vertical-line"></div>
+
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Số tài khoản:
+        </div>
+        <div class="col-sm-9" id="user-soTaiKhoan">
+            <% if(locals.user) { %>
+            <%= locals.user.soTaiKhoan %>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<div class="user-container">
+    <button type="button" class="btn btn-primary btn-edit-password" onclick="" data-id="<%= locals.user.objectId %>">
+        Đổi mật khẩu
+    </button>
+
+    <button type="button" class="btn btn-primary btn-edit" onclick="" data-id="<%= locals.user.objectId %>">
+        Cập nhật thông tin
+    </button>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+<div class="user-container" id="userInformation">
+    <div class="row user-row">
+        <h3>Chính sách hủy vé</h3>
+    </div>
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Chính sách #1:
+        </div>
+        <div class="col-sm-9" id="chinhSach1-phanTram">
+            <% if(locals.user && chinhSach) { %>
+            <%= chinhSach.chinhSach1 %> %
+            <% } %>
+        </div>
+    </div>
+    <div class="row user-row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9" id="chinhSach1-moTa">
+            <% if(locals.user && chinhSach) { %>
+            <%= chinhSach.moTa1 %>
+            <% } %>
+        </div>
+    </div>
+    <div class="row user-row">
+        <div class="col-sm-3">
+            Chính sách #2:
+        </div>
+        <div class="col-sm-9" id="chinhSach2-phanTram">
+            <% if(locals.user && chinhSach) { %>
+            <%= chinhSach.chinhSach2 %> %
+            <% } %>
+        </div>
+    </div>
+    <div class="row user-row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9" id="chinhSach2-moTa">
+            <% if(locals.user && chinhSach) { %>
+            <%= chinhSach.moTa2 %>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<div class="user-container">
+    <button type="button" class="btn btn-primary btn-edit-policy" onclick="">
+        Cập nhật
+    </button>
+</div>
+
+<script>
+    $(document).on("click", "button.btn-edit", function (event) {
+        const data = {
+            id: $(this).attr("data-id")
+        };
+        $("#notificationAlert").hide();
+        var dialog = bootbox.dialog({
+            title: "Thông tin cá nhân",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            truSo: $("#truSo").val(),
+                            duongDayNong: $("#duongDayNong").val(),
+                            website: $("#website").val(),
+                            maDoanhNghiep: $("#maDoanhNghiep").val(),
+                            noiCapMaDoanhNghiep: $("#noiCapMaDoanhNghiep").val(),
+                            maSoThue: $("#maSoThue").val(),
+                            soTaiKhoan: $("#soTaiKhoan").val()
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/info/update-user",
+                                data: result
+                            })
+                            .done(res => {
+                                $("#user-truSo").html(result.truSo);
+                                $("#user-duongDayNong").html(result.duongDayNong);
+                                $("#user-website").html(result.website);
+                                $("#user-maDoanhNghiep").html(result.maDoanhNghiep);
+                                $("#user-noiCap").html(result.noiCapMaDoanhNghiep);
+                                $("#user-maSoThue").html(result.maSoThue);
+                                $("#user-soTaiKhoan").html(result.soTaiKhoan);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                },
+            }
+        });
+
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/info/get-user",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+
+    // Change password button onClick
+    $(document).on("click", "button.btn-edit-password", function (event) {
+        const data = {
+            id: $(this).attr("data-id")
+        };
+        $("#notificationAlert").hide();
+        var dialog = bootbox.dialog({
+            title: "Thông tin cá nhân",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            newPassword: $("#newPass").val(),
+                            confirmPassword: $("#confirm").val()
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/info/change-password",
+                                data: result
+                            })
+                            .done(res => {
+                                if (res === "ok") {
+                                    bootbox.hideAll();
+                                } else {
+                                    $("#notificationAlert").html(
+                                        "Xin nhập đúng mật khẩu và mật khẩu xác thực của bạn!"
+                                    );
+                                    $("#notificationAlert").show();
+                                }
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                },
+            }
+        });
+
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/info/get-changeUI",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+
+
+    // button update policy
+    $(document).on("click", "button.btn-edit-policy", function (event) {
+        $("#notificationAlert").hide();
+        var dialog = bootbox.dialog({
+            title: "Chính sách hủy vé",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            chinhSach1: $("#chinhSach1").val(),
+                            chinhSach2: $("#chinhSach2").val(),
+                            thoiGian1: $("#thoiGian1").val(),
+                            thoiGian2: $("#thoiGian2").val(),
+                            moTa1: $("#moTa1").val(),
+                            moTa2: $("#moTa2").val()
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/info/update-policy",
+                                data: result
+                            })
+                            .done(res => {
+                                $("#chinhSach1-phanTram").html(result.chinhSach1 + " %");
+                                $("#chinhSach2-phanTram").html(result.chinhSach2 + " %");
+                                $("#chinhSach1-moTa").html(result.moTa1);
+                                $("#chinhSach2-moTa").html(result.moTa2);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                },
+            }
+        });
+
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/info/get-policy"
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+</script>

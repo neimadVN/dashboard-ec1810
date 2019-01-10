@@ -1,0 +1,221 @@
+<button class="btn btn-primary btn-create" onclick="">Thêm xe mới</button>
+<div class="table-responsive">
+    <table id="cars" class="table table-striped table-bordered dt-responsive nowrap">
+        <thead>
+            <tr>
+                <th>Mã xe</th>
+                <th>Loại xe</th>
+                <th>Biển số</th>
+                <th>Mô tả</th>
+                <th>Tình trạng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+    var table = $("#cars").DataTable({
+        processing: true,
+        serverSide: true,
+        bLengthChange: false,
+        paging: true,
+        pageLength: 10,
+        autoWidth: false,
+        language: {
+            info: "Đang hiển thị trang _PAGE_ / _PAGES_",
+            search: "Tìm kiếm",
+            paginate: {
+                previous: "Trước",
+                next: "Sau"
+            }
+        },
+        ajax: {
+            url: window.location.href,
+            type: "GET",
+            dataType: "json"
+        },
+        columns: [{
+                data: "objectId",
+                class: "text-left",
+                orderable: false,
+                visible: true,
+                render: function (data, type, row) {
+                    if (row.objectId !== undefined && row.objectId !== null)
+                        return row.objectId;
+                    else return "";
+                }
+            },
+            {
+                data: "idLoaiXe",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.idLoaiXe !== undefined && row.idLoaiXe !== null) return row.idLoaiXe.tenLoai;
+                    else return "";
+                }
+            },
+            {
+                data: "bienSo",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.bienSo !== undefined && row.bienSo !== null)
+                        return row.bienSo;
+                    else return "";
+                }
+            },
+            {
+                data: "chiTiet",
+                class: "text-left",
+                orderable: false,
+                render: function (data, type, row) {
+                    if (row.chiTiet !== undefined && row.chiTiet !== null) return row.chiTiet;
+                    else return "";
+                }
+            },
+            {
+                data: "trangThai",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.trangThai !== undefined && row.trangThai !== null && row.trangThai === 'ACTIVED') {
+                    return (
+                        '<p class="text-active">Còn hoạt động</p>'
+                    );
+                    } else {
+                        return (
+                        '<p class="text-inactive">Ngưng hoạt động</p>'
+                    );
+                    }
+                }
+            },
+            {
+                class: "text-center",
+                orderable: false,
+                render: function (data, type, row) {
+                    return (
+                        '<button class="btn btn-default btn-edit-car" data-id="' +
+                        row.objectId + '" data-carTypeId="' + row.idLoaiXe.objectId + '">'
+                        + 'Sửa</button>'
+                    );
+                }
+            }
+        ]
+    });
+
+    
+    ////// ------------------Button Edit
+    $(document).on("click", "button.btn-edit-car", function (event) {
+        $("#notificationAlert").hide();
+        const data = {
+            id: $(this).attr("data-id"),
+            carTypeId: $(this).attr("data-carTypeId")
+        };
+        let error = false;
+        var dialog = bootbox.dialog({
+            title: "Thông tin xe khách",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+            buttons: {
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        let error = false;
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            loaiXe: $("#loaiXe").val(),
+                            bienSo: $("#bienSo").val(),
+                            chiTiet: $("#chiTiet").val(),
+                            trangThai: $("#trangThai").val()
+                        };
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/cars/update-car",
+                                data: result,
+                                async: true
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/cars/get-UI-update",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+    ////// ------------------Button Create
+    $(document).on("click", "button.btn-create", function (event) {
+        let dialog = bootbox.dialog({
+            title: "Thêm xe khách mới",
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+            buttons: {
+                Update: {
+                    label: "Tạo mới",
+                    className: "btn-success",
+                    callback: function () {
+                        const result = {
+                            loaiXe: $("#loaiXe").val(),
+                            bienSo: $("#bienSo").val(),
+                            chiTiet: $("#chiTiet").val()
+                        };
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/cars/create-car",
+                                data: result
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/cars/get-UI-create"
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+</script>

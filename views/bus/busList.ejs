@@ -1,0 +1,323 @@
+<button class="btn btn-primary btn-create" onclick="">Thêm tuyến</button>
+<div class="table-responsive">
+    <table id="buses" class="table table-striped table-bordered table-hover dt-responsive nowrap">
+        <thead>
+            <tr>
+                <th>Mã tuyến</th>
+                <th>Lộ trình</th>
+                <th>Xe khách</th>
+                <th>Thời gian</th>
+                <th>Giá vé</th>
+                <th>Tình trạng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    var table = $("#buses").DataTable({
+        processing: true,
+        serverSide: true,
+        bLengthChange: false,
+        paging: true,
+        pageLength: 10,
+        autoWidth: false,
+        language: {
+            info: "Đang hiển thị trang _PAGE_ / _PAGES_",
+            search: "Tìm kiếm",
+            paginate: {
+                previous: "Trước",
+                next: "Sau"
+            }
+        },
+        ajax: {
+            url: window.location.href,
+            type: "GET",
+            dataType: "json"
+        },
+        columns: [{
+                data: "objectId",
+                class: "text-left",
+                orderable: false,
+                visible: true,
+                render: function (data, type, row) {
+                    if (row.objectId !== undefined && row.objectId !== null)
+                        return row.objectId;
+                    else return "";
+                }
+            },
+            {
+                data: "loTrinh",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.loTrinh !== undefined && row.loTrinh !== null)
+                        return row.loTrinh.huyenTinhDi + " - " + row.loTrinh.huyenTinhDen;
+                    else return "";
+                }
+            },
+            {
+                data: "xe",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.xe !== undefined && row.xe !== null) return row.xe.bienSo;
+                    else return "";
+                }
+            },
+            {
+                data: "thoiGian",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.thoiGian !== undefined && row.thoiGian !== null) {
+                        return row.thoiGian.join(", ");
+                    } else return "";
+                }
+            },
+            {
+                data: "giaVe",
+                class: "text-right",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.giaVe !== undefined && row.giaVe !== null)
+                        return row.giaVe.toLocaleString(
+                            undefined, {
+                                minimumFractionDigits: 0
+                            }) + " VNĐ";
+                    else return "";
+                }
+            },
+            {
+                data: "trangThai",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.trangThai !== undefined && row.trangThai !== null && row.trangThai ===
+                        'ACTIVED') {
+                        return (
+                            '<p class="text-active">Còn hoạt động</p>'
+                        );
+                    } else {
+                        return (
+                            '<p class="text-inactive">Ngưng hoạt động</p>'
+                        );
+                    }
+                }
+            },
+            {
+                class: "text-center",
+                orderable: false,
+                render: function (data, type, row) {
+                    return (
+                        '<button class="btn btn-default btn-edit-bus" data-id="' +
+                        row.objectId + '">' +
+                        'Sửa</button>' + ' ' +
+                        '<button class="btn btn-primary btn-add-ticket" data-id="' +
+                        row.objectId + '">' +
+                        'Tạo vé</button>'
+                    );
+                }
+            }
+        ]
+    });
+
+
+    ////// ------------------Button Edit
+    $(document).on("click", "button.btn-edit-bus", function (event) {
+        $("#notificationAlert").hide();
+        const data = {
+            id: $(this).attr("data-id")
+        };
+        let error = false;
+        var dialog = bootbox.dialog({
+            title: "Thông tin tuyến xe",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        let error = false;
+
+                        const thoiGian = [];
+                        for (let i = 1; i <= 5; i++) {
+                            thoiGian.push($("#thoiGian-" + i).val());
+                        }
+
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            giaVe: $("#giaVe").val(),
+                            trangThai: $("#trangThai").val(),
+                            thoiGian: thoiGian
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/buses/update-bus",
+                                data: result,
+                                async: true
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/buses/modify-bus",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+
+    ////// ------------------Button Create
+    $(document).on("click", "button.btn-create", function (event) {
+        let dialog = bootbox.dialog({
+            title: "Thêm tuyến xe mới",
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Tạo mới",
+                    className: "btn-success",
+                    callback: function () {
+
+                        const thoiGian = [];
+                        for (let i = 1; i <= 5; i++) {
+                            thoiGian.push($("#thoiGian-" + i).val());
+                        }
+
+                        const result = {
+                            loTrinhId: $("#loTrinh").val(),
+                            xeId: $("#xeKhach").val(),
+                            giaVe: $("#giaVe").val(),
+                            thoiGian: thoiGian
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/buses/create-bus",
+                                data: result
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/buses/new-bus"
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+
+    ////// ------------------Button add ticket
+    $(document).on("click", "button.btn-add-ticket", function (event) {
+        $("#notificationAlert").hide();
+        const data = {
+            id: $(this).attr("data-id")
+        };
+        let error = false;
+        var dialog = bootbox.dialog({
+            title: "Tạo vé cho tuyến xe",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Đang tải...</p>',
+            buttons: {
+                Update: {
+                    label: "Đồng ý",
+                    className: "btn-success",
+                    callback: function () {
+                        let error = false;
+
+                        const thoiGian = [];
+                        for (let i = 1; i <= 5; i++) {
+                            thoiGian.push($("#thoiGian-" + i).val());
+                        }
+
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            ngayThang: $("#ngayThang").val(),
+                            loTrinhId: $("#loTrinhId").val(),
+                            xeId: $("#xeId").val(),
+                            thoiGian: thoiGian,
+                            giaVe: $("#giaVe").val(),
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/buses/create-ticket",
+                                data: result,
+                                async: true
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/buses/modify-bus-ticket",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+</script>

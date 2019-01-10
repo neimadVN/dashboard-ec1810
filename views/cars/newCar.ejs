@@ -1,0 +1,23 @@
+<div class="alert alert-danger" id="notificationAlert" style="display: none;">
+</div>
+
+<div class="form-group">
+    <label for="loaiXe">Loại xe:</label>
+    <select id="loaiXe" name="loaiXe" autocomplete="off" class="form-control mw-100" required group-input-data-parsley>
+        <% loaiXe.forEach(loai => { %>
+        <option value="<%= loai.objectId %>">
+            <%= loai.tenLoai %>
+        </option>
+        <% }); %>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="bienSo">Biển số:</label>
+    <input type="text" class="form-control" id="bienSo" />
+</div>
+
+<div class="form-group">
+    <label for="chiTiet">Mô tả:</label>
+    <input type="text" class="form-control" id="chiTiet" />
+</div>

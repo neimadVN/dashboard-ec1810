@@ -1,0 +1,259 @@
+<button class="btn btn-primary btn-create" onclick="">Thêm lộ trình</button>
+<div class="table-responsive">
+    <table id="routes" class="table table-striped table-bordered table-hover dt-responsive nowrap">
+        <thead>
+            <tr>
+                <th>Mã lộ trình</th>
+                <th>Bắt đầu</th>
+                <th>Kết thúc</th>
+                <th>Thời gian</th>
+                <th>Tình trạng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    var table = $("#routes").DataTable({
+        processing: true,
+        serverSide: true,
+        bLengthChange: false,
+        paging: true,
+        pageLength: 10,
+        autoWidth: false,
+        language: {
+            info: "Đang hiển thị trang _PAGE_ / _PAGES_",
+            search: "Tìm kiếm",
+            paginate: {
+                previous: "Trước",
+                next: "Sau"
+            }
+        },
+        ajax: {
+            url: window.location.href,
+            type: "GET",
+            dataType: "json"
+        },
+        columns: [{
+                data: "objectId",
+                class: "text-left",
+                orderable: false,
+                visible: true,
+                render: function (data, type, row) {
+                    if (row.objectId !== undefined && row.objectId !== null)
+                        return row.objectId;
+                    else return "";
+                }
+            },
+            {
+                data: "huyenTinhDi",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.huyenTinhDi !== undefined && row.huyenTinhDi !== null) return row.huyenTinhDi;
+                    else return "";
+                }
+            },
+            {
+                data: "huyenTinhDen",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.huyenTinhDen !== undefined && row.huyenTinhDen !== null) return row.huyenTinhDen;
+                    else return "";
+                }
+            },
+            {
+                data: "thoiGianDuKien",
+                class: "text-right",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.thoiGianDuKien !== undefined && row.thoiGianDuKien !== null)
+                        return convertToTime(row.thoiGianDuKien);
+                    else return "";
+                }
+            },
+            {
+                data: "trangThai",
+                class: "text-left",
+                orderable: true,
+                render: function (data, type, row) {
+                    if (row.trangThai !== undefined && row.trangThai !== null && row.trangThai ===
+                        'ACTIVED') {
+                        return (
+                            '<p class="text-active">Còn hoạt động</p>'
+                        );
+                    } else {
+                        return (
+                            '<p class="text-inactive">Ngưng hoạt động</p>'
+                        );
+                    }
+                }
+            },
+            {
+                class: "text-center",
+                orderable: false,
+                render: function (data, type, row) {
+                    return (
+                        '<button class="btn btn-default btn-edit-route" data-id="' +
+                        row.objectId + '">' +
+                        'Sửa</button>'
+                    );
+                }
+            }
+        ]
+    });
+
+
+    ////// ------------------Button Edit
+    $(document).on("click", "button.btn-edit-route", function (event) {
+        $("#notificationAlert").hide();
+        const data = {
+            id: $(this).attr("data-id")
+        };
+        let error = false;
+        var dialog = bootbox.dialog({
+            title: "Thông tin lộ trình",
+            closeButton: false,
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+            buttons: {
+                Update: {
+                    label: "Cập nhật",
+                    className: "btn-success",
+                    callback: function () {
+                        let error = false;
+
+                        let dsDiemDon = [];
+                        let dsDiemTra = [];
+                        let i;
+                        for(i = 1; i <= 5; i++) {
+                            dsDiemDon.push($("#diemDon-" + i).val());
+                        }
+                        for(i = 1; i <= 5; i++) {
+                            dsDiemTra.push($("#diemTra-" + i).val());
+                        }
+
+                        const result = {
+                            objectId: $("#objectId").val(),
+                            thoiGian: $("#thoiGian").val(),
+                            trangThai: $("#trangThai").val(),
+                            diemDon: dsDiemDon,
+                            diemTra: dsDiemTra
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/routes/update-route",
+                                data: result,
+                                async: true
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/routes/modify-route",
+                data: data
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+
+    ////// ------------------Button Create
+    $(document).on("click", "button.btn-create", function (event) {
+        let dialog = bootbox.dialog({
+            title: "Thêm lộ trình mới",
+            message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>',
+            buttons: {
+                Update: {
+                    label: "Tạo mới",
+                    className: "btn-success",
+                    callback: function () {
+                        let dsDiemDon = [];
+                        let dsDiemTra = [];
+                        let i;
+                        for(i = 1; i <= 5; i++) {
+                            dsDiemDon.push($("#diemDon-" + i).val());
+                        }
+                        for(i = 1; i <= 5; i++) {
+                            dsDiemTra.push($("#diemTra-" + i).val());
+                        }
+
+                        const result = {
+                            diemDi: $("#diemDi").val(),
+                            diemDiMoi: $("#diemDiMoi").val(),
+                            diemDen: $("#diemDen").val(),
+                            diemDenMoi: $('#diemDenMoi').val(),
+                            thoiGian: $("#thoiGian").val(),
+                            diemDon: dsDiemDon,
+                            diemTra: dsDiemTra
+                        };
+
+                        $.ajax({
+                                type: "POST",
+                                url: "/dashboard/routes/create-route",
+                                data: result
+                            })
+                            .done(res => {
+                                table.ajax.reload(null, false);
+                                bootbox.hideAll();
+                            })
+                            .catch(err => {
+                                $("#notificationAlert").html(err.responseText);
+                                $("#notificationAlert").show();
+                            });
+                        return false;
+                    }
+                },
+                cancel: {
+                    label: "Đóng",
+                    className: "btn-default"
+                }
+            }
+        });
+        $.ajax({
+                type: "POST",
+                url: "/dashboard/routes/new-route"
+            })
+            .done(res => {
+                dialog.init(function () {
+                    dialog.find(".bootbox-body").html(res);
+                });
+            })
+            .catch(err => {
+                showSnackbar("Error");
+            });
+    });
+
+    function convertToTime(minutes) {
+        const hours = minutes / 60;
+        const min = minutes % 60;
+
+        if (hours > 0) {
+            return parseInt(hours) + " giờ " + min + " phút";
+        } else {
+            return min + " phút";
+        }
+    }
+</script>

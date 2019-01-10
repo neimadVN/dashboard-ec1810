@@ -1,0 +1,60 @@
+<!--
+  Sidebar Menu Items - These collapse to the responsive navigation menu on small screens
+-->
+<% if(locals.user && locals.user.role === 'NHAXE') { %>
+
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+  <ul class="nav navbar-nav side-nav">
+    <li>
+      <a href="/dashboard/info"><span class="glyphicon glyphicon-user"></span> Thông tin của bạn</a>
+    </li>
+
+    <li>
+      <a href="/dashboard/cars"><span class="glyphicon glyphicon-tower"></span> Quản lý xe</a>
+    </li>
+
+    <li>
+      <a href="/dashboard/routes"><span class="glyphicon glyphicon-flag"></span> Quản lý lộ trình</a>
+    </li>
+
+    <li>
+      <a href="/dashboard/buses"><span class="glyphicon glyphicon-road"></span> Quản lý tuyến xe</a>
+    </li>
+
+    <li>
+      <a href="#" data-toggle="collapse" data-target="#submenu-1"><span class="glyphicon glyphicon-tags"></span> Quản
+        lý vé<i class="fa fa-fw fa-angle-down pull-right"></i></a>
+      <ul id="submenu-1" class="collapse">
+        <li>
+          <a href="/dashboard/tickets/booked"><i class="fa fa-angle-double-right"></i> Vé đã đặt</a>
+        </li>
+        <li>
+          <a href="/dashboard/tickets/cancelled"><i class="fa fa-angle-double-right"></i> Vé đã hủy</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#"><span class="glyphicon glyphicon-signal"></span> Báo cáo thống kê</a>
+    </li>
+
+  </ul>
+</div>
+
+<% } else { %>
+
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+  <ul class="nav navbar-nav side-nav">
+
+    <li>
+      <a href="/admin/users/members"><i class="glyphicon glyphicon-user"></i> Quản lý khách hàng</a>
+    </li>
+    <li>
+      <a href="/admin/users/cars"><i class="glyphicon glyphicon-user"></i> Quản lý nhà xe</a>
+    </li>
+
+  </ul>
+</div>
+
+<% }  %>
+<!-- /.navbar-collapse -->
